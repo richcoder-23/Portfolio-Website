@@ -1,0 +1,18 @@
+.group  { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+.word   { display: inline-flex; align-items: center; white-space: nowrap; }
+.letter { display: inline-block; line-height: 1; margin: 0 1px; }
+
+.a { font-family: var(--font-archivo-black), "Arial Black", sans-serif; text-transform: uppercase;
+     background: var(--ink); color: var(--paper); padding: 3px 5px; transform: rotate(-4deg); }
+.b { font-family: var(--font-bungee), "Arial Black", sans-serif; text-transform: uppercase;
+     color: var(--ink); font-size: 1.05em; transform: rotate(3deg); }
+.c { font-family: var(--font-alfa-slab), Rockwell, serif;
+     color: var(--ink); font-size: 1.05em; transform: rotate(-3deg); }
+.d { font-family: var(--font-bowlby), "Arial Black", sans-serif; text-transform: uppercase;
+     background: var(--red); color: var(--paper); padding: 3px 4px; font-size: 0.9em; transform: rotate(5deg); }
+
+/* first letter of each word: bigger. it comes after .a so its rotation wins */
+.hero { font-size: 1.2em; transform: rotate(-6deg); }
+
+/* readable by screen readers, invisible on screen */
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
