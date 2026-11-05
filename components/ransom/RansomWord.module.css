@@ -844,16 +844,16 @@
   }
 }
 
-/* ---------- PHONES: everything fits one screen, no scrolling ---------- */
+/* ---------- PHONES: one screen, reads top to bottom: instruction, gun, bullets ---------- */
 @media (max-width: 760px) {
-  /* exactly one screen tall */
+  /* --shift pushes the group down on tall phones so it sits centered; 0 on small ones */
   .menu {
     --cyl: 250px;
+    --shift: max(0px, calc((100dvh - 660px) / 2));
     height: 100dvh;
     min-height: 0;
   }
 
-  /* top: name left, status right (smaller) */
   .nameTag {
     top: 16px;
     left: 16px;
@@ -866,54 +866,27 @@
   .place {
     font-size: 10px;
   }
+
+  /* status: hidden on screen, still announced by screen readers (same trick as .srOnly) */
   .hudStatus {
-    top: 96px;
-    right: 16px;
-    padding: 5px 9px;
-    gap: 6px;
-    font-size: 9px;
-  }
-  .hudStatus b {
-    font-size: 11px;
-  }
-  .hudDot {
-    width: 7px;
-    height: 7px;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  /* the gun, then the 0/1 counter right under it */
-  .gunWrap {
-    left: 12px;
-    top: 19dvh;
-    width: 84vw;
-    transform: none;
-  }
-  .hudBottom {
-    top: calc(19dvh + 46vw);
-    bottom: auto;
-    left: 20px;
-    right: auto;
-    align-items: flex-start;
-  }
-  .hudAmmoBig {
-    font-size: 28px;
-  }
-  .hudAmmoSmall {
-    font-size: 15px;
-  }
-  .hudPrompts {
-    display: none;
-  }
-
-  /* bottom: guide on the left, bullets on the right */
+  /* 1. instruction */
   .instruction {
-    top: auto;
-    bottom: calc(5dvh + 52px);
+    top: calc(104px + var(--shift));
+    bottom: auto;
     left: 16px;
-    right: auto;
+    right: 16px;
     transform: none;
     width: auto;
-    max-width: 44vw;
+    max-width: none;
     gap: 6px;
   }
   .instructionBig {
@@ -922,12 +895,23 @@
   .instruction p {
     font-size: 12px;
     line-height: 1.5;
+    max-width: 30ch;
   }
+
+  /* 2. gun */
+  .gunWrap {
+    left: 12px;
+    top: calc(186px + var(--shift));
+    width: 84vw;
+    transform: none;
+  }
+
+  /* 3. bullets right under the gun, counter beside them */
   .bullets {
     left: auto;
     right: 16px;
-    top: auto;
-    bottom: 5dvh;
+    top: calc(198px + 46vw + var(--shift));
+    bottom: auto;
     transform: none;
     gap: 10px;
     align-items: flex-end;
@@ -944,6 +928,22 @@
   }
   .lblRest {
     font-size: 15px;
+  }
+  .hudBottom {
+    top: calc(206px + 46vw + var(--shift));
+    bottom: auto;
+    left: 20px;
+    right: auto;
+    align-items: flex-start;
+  }
+  .hudAmmoBig {
+    font-size: 28px;
+  }
+  .hudAmmoSmall {
+    font-size: 15px;
+  }
+  .hudPrompts {
+    display: none;
   }
 
   /* the fired panel covers the screen and scrolls inside itself if it's long */
