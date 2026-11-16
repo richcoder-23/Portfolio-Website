@@ -18,7 +18,6 @@ export const CHAMBERS: [number, number][] = [
 export const BASE_ANGLE = 32.5;
 
 export const WORK_LINKS = [
-  { href: "#all-works", label: "All works" },
   { href: "#3d", label: "3d & animation" },
   { href: "#coding", label: "Coding" },
   { href: "#art", label: "Illustrations" },

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RansomWord from "@/components/ransom/RansomWord";
 import styles from "@/components/ransom/RansomWord.module.css";
@@ -10,20 +13,77 @@ import {
   type Section,
 } from "./data";
 
+/* THE STATE MACHINE. the page is always in exactly one phase:
+   idle    -> nothing happening, bullets clickable
+   loading -> the cut-in plays (every shot)
+   firing  -> recoil, flash, tracer, shake; bullets fade
+   open    -> the panel is in place
+   closing -> the panel leaves, bullets come back, then idle again */
 type Phase = "idle" | "loading" | "firing" | "open" | "closing";
+
+/* TIMING, in milliseconds after the click: about 1.5s from click to a settled panel.
+   these must match the CSS durations (cut-in .9s, bullet lands .54s, panel .38s, panel out .26s) */
+const TIMING = { reveal: 540, turn: 600, fire: 900, open: 1150, close: 280 };
 
 // joins class names, skipping any that are false or empty
 const cx = (...names: (string | false | null | undefined)[]) =>
   names.filter(Boolean).join(" ");
 
 export default function RevolverMenu() {
-  // ---- FAKE STATE for now. step 6 replaces these five lines ----
-  const phase = "idle" as Phase;
-  const pending = null as Section | null;
-  const section = null as Section | null;
-  const loadedChamber = null as number | null;
-  const turns = 0;
-  // ----------------------------------------------------------------
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [pending, setPending] = useState<Section | null>(null);
+  const [section, setSection] = useState<Section | null>(null);
+  const [loadedChamber, setLoadedChamber] = useState<number | null>(null);
+  const [turns, setTurns] = useState(0);
+
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const backRef = useRef<HTMLButtonElement>(null);
+
+  const clearTimers = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+  };
+  const later = (ms: number, fn: () => void) => {
+    timers.current.push(setTimeout(fn, ms));
+  };
+
+  // stop any pending timers if the menu unmounts mid-shot
+  useEffect(() => clearTimers, []);
+
+  // when the panel opens, move keyboard focus to its back button
+  useEffect(() => {
+    if (phase === "open") backRef.current?.focus({ preventScroll: true });
+  }, [phase]);
+
+  function fire(name: Section) {
+    if (phase !== "idle") return;
+    clearTimers();
+    // the chamber that currently sits at 9 o'clock, the loading spot
+    const target = (((5 - turns) % 6) + 6) % 6;
+
+    setPhase("loading");
+    setPending(name);
+    setLoadedChamber(null);
+    later(TIMING.reveal, () => setLoadedChamber(target)); // bullet lands
+    later(TIMING.turn, () => setTurns((t) => t + 1)); // cylinder turns
+    later(TIMING.fire, () => {
+      setPhase("firing");
+      setPending(null);
+      setSection(name);
+    });
+    later(TIMING.open, () => setPhase("open"));
+  }
+
+  function close() {
+    if (phase !== "open") return;
+    clearTimers();
+    setPhase("closing");
+    later(TIMING.close, () => {
+      setPhase("idle");
+      setSection(null);
+      setLoadedChamber(null);
+    });
+  }
 
   const fired = phase === "firing" || phase === "open";
   const loading = phase === "loading";
@@ -88,6 +148,7 @@ export default function RevolverMenu() {
               type="button"
               aria-label={`Fire ${s.label}`}
               className={cx(styles.bullet, pending === s.id && styles.isLoaded)}
+              onClick={() => fire(s.id)}
             >
               <Image
                 className={styles.bulletImg}
@@ -120,7 +181,12 @@ export default function RevolverMenu() {
           className={cx(styles.shotPanel, styles.boil)}
           aria-label={section ? labelOf(section) : "Section"}
         >
-          <button type="button" className={styles.shotBack}>
+          <button
+            ref={backRef}
+            type="button"
+            className={styles.shotBack}
+            onClick={close}
+          >
             ‹ back
           </button>
           <span className={styles.shotKicker}>target</span>
@@ -160,10 +226,11 @@ export default function RevolverMenu() {
 
           {section === "contact" && (
             <>
-              <span className={styles.shotEmail}>[your@email.com]</span>
+              <span className={styles.shotEmail}>
+                [chinemelum.work@gmail.com]
+              </span>
               <p className={styles.shotNote}>
-                [What you're open to, e.g. commissions, freelance,
-                collaborations]
+                Open to commissions, freelance and collaborations
               </p>
             </>
           )}

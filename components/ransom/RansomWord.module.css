@@ -65,10 +65,19 @@
 /* ---------- PAGE ---------- */
 .menu {
   --cyl: 380px;
+  /* the gun sits a fixed distance under the name tag (which ends ~135px down),
+     the same ~120px gap an iPad shows in landscape, instead of being centred on
+     the screen's height */
+  --gun-top: 225px;
+  --gun-w: min(662px, calc(48vw - 20px));
+  /* the page is never shorter than this; on a smaller window it scrolls a little
+     instead of cutting off the gun's grip or the last bullet */
+  --page-h: 100dvh;
+  --gun-h: calc(var(--gun-w) * 0.529); /* gun.png is 1216 x 643 */
+  --gun-mid: calc(var(--gun-top) + var(--gun-h) / 2);
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: var(--page-h);
   overflow: hidden;
   color: var(--ink);
   font-size: 14px;
@@ -186,9 +195,8 @@
   position: absolute;
   z-index: 1;
   left: max(16px, 3vw);
-  top: 50%;
-  width: min(682px, 48vw);
-  transform: translateY(-50%);
+  top: var(--gun-top);
+  width: var(--gun-w);
 }
 .gunTilt {
   transform-origin: 20% 75%;
@@ -384,7 +392,11 @@
   position: absolute;
   z-index: 3;
   left: 45%;
-  top: 62%;
+  /* level with the gun's grip, but never so low the last bullet drops off the page */
+  top: min(
+    calc(var(--gun-mid) + var(--gun-h) * 0.3),
+    calc(var(--page-h) - 170px)
+  );
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -537,9 +549,13 @@
   position: absolute;
   z-index: 4;
   right: max(16px, 4vw);
-  top: 50%;
+  top: 150px;
+  bottom: 96px;
   width: min(560px, 46vw);
-  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
   filter: drop-shadow(14px 16px 0 var(--ink));
   visibility: hidden;
 }
@@ -574,6 +590,9 @@
   align-items: flex-start;
   gap: 18px;
   box-sizing: border-box;
+  max-height: 100%;
+  overflow-y: auto;
+  pointer-events: auto;
 }
 .shotPanel::before {
   content: "";
@@ -841,6 +860,70 @@
   to {
     opacity: 0;
     transform: scale(1.5);
+  }
+}
+
+/* ---------- TABLETS HELD UPRIGHT (iPads in portrait) ----------
+   the desktop layout centres everything on the screen's height, which leaves a big
+   empty gap under the name on tall screens. here it stacks from the top instead,
+   like the phone layout but bigger: name, instruction, gun, then bullets + counter */
+@media (min-width: 761px) and (orientation: portrait) {
+  .menu {
+    --gun-w: 76vw;
+    --gun-top: 290px;
+  }
+
+  .instruction {
+    top: 176px;
+    left: max(16px, 5vw);
+    right: max(16px, 5vw);
+    transform: none;
+    width: auto;
+  }
+  .instruction p {
+    max-width: 40ch;
+  }
+
+  .gunWrap {
+    left: max(16px, 4vw);
+    top: var(--gun-top);
+    width: var(--gun-w);
+    transform: none;
+  }
+
+  .bullets {
+    left: auto;
+    right: max(16px, 5vw);
+    top: calc(var(--gun-top) + var(--gun-h) + 40px);
+    transform: none;
+    align-items: flex-end;
+  }
+  .bullet:nth-of-type(1) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .bullet:nth-of-type(2) {
+    margin-left: 0;
+    margin-right: 35px;
+  }
+  .bullet:nth-of-type(3) {
+    margin-right: 70px;
+  }
+
+  .hudBottom {
+    top: calc(var(--gun-top) + var(--gun-h) + 52px);
+    bottom: auto;
+    left: max(16px, 5vw);
+    right: auto;
+    align-items: flex-start;
+  }
+  .hudPrompts {
+    max-width: 30vw;
+  }
+
+  /* the panel is a bit wider than on desktop */
+  .shotWrap {
+    width: min(560px, 62vw);
   }
 }
 
