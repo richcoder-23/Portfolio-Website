@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import RansomWord from "@/components/ransom/RansomWord";
 import { SITE } from "@/lib/site";
 import styles from "@/components/ransom/RansomWord.module.css";
 import {
+  ABOUT_SKILLS,
   SECTIONS,
   CHAMBERS,
   BASE_ANGLE,
@@ -22,9 +24,9 @@ import {
    closing -> the panel leaves, bullets come back, then idle again */
 type Phase = "idle" | "loading" | "firing" | "open" | "closing";
 
-/* TIMING, in milliseconds after the click: about 1.5s from click to a settled panel.
-   these must match the CSS durations (cut-in .9s, bullet lands .54s, panel .38s, panel out .26s) */
-const TIMING = { reveal: 540, turn: 600, fire: 900, open: 1150, close: 280 };
+/* TIMING, in milliseconds after the click: about 1s from click to a settled panel.
+   these must match the CSS durations (cut-in .55s, bullet lands .33s, panel .38s, panel out .26s) */
+const TIMING = { reveal: 330, turn: 360, fire: 550, open: 650, close: 280 };
 
 // joins class names, skipping any that are false or empty
 const cx = (...names: (string | false | null | undefined)[]) =>
@@ -201,12 +203,46 @@ export default function RevolverMenu() {
           {section === "about" && (
             <>
               <p>
-                [Short bio: who you are, what you make, and what drives your
-                work. Two or three sentences.]
+                Hi, I&apos;m Richard, a computer science student and creative
+                developer based in Lagos.
               </p>
-              <p className={styles.shotNote}>
-                [Tools and skills, e.g. Blender · JavaScript · Procreate]
+              <p>
+                I build websites with a focus on the front end, and I make 3D
+                models, animations and illustrations. I care about work that
+                looks good <em>and</em> feels good to use.
               </p>
+              <p>
+                I&apos;m most interested in front-end development, game design
+                and animation, especially where they meet: interfaces that move
+                and play like a game. Like the revolver you just fired.
+              </p>
+
+              <dl className={styles.skills}>
+                {ABOUT_SKILLS.map((group) => (
+                  <div key={group.label} className={styles.skillRow}>
+                    <dt className={styles.skillLabel}>{group.label}</dt>
+                    <dd className={styles.skillTags}>
+                      {group.tools.map((tool) => (
+                        <span key={tool} className={styles.skillTag}>
+                          {tool}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className={styles.shotActions}>
+                <Link href="/works/coding" className={styles.shotButton}>
+                  See my works ›
+                </Link>
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className={`${styles.shotButton} ${styles.shotButtonRed}`}
+                >
+                  Get in touch ›
+                </a>
+              </div>
             </>
           )}
 

@@ -17,6 +17,13 @@ export const CHAMBERS: [number, number][] = [
 // rotating the cylinder by this much puts a chamber exactly at 9 o'clock
 export const BASE_ANGLE = 32.5;
 
+// the skills rows in the About panel
+export const ABOUT_SKILLS = [
+  { label: "Code", tools: ["Next.js", "React", "TypeScript", "CSS"] },
+  { label: "3D", tools: ["Blender"] },
+  { label: "Art", tools: ["Procreate", "Photoshop", "Illustrator"] },
+];
+
 // the Works panel links. each one opens that category's page
 export const WORK_LINKS = [
   { href: "/works/3d", label: "3d & animation" },

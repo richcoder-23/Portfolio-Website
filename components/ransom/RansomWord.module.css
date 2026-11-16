@@ -549,9 +549,9 @@
   position: absolute;
   z-index: 4;
   right: max(16px, 4vw);
-  top: 150px;
-  bottom: 96px;
-  width: min(560px, 46vw);
+  top: 28px; /* while a panel is open it can rise over the status box */
+  bottom: 90px;
+  width: min(660px, 52vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -584,11 +584,11 @@
   position: relative;
   z-index: 0;
   background: var(--paper);
-  padding: 34px 40px 40px;
+  padding: 22px 32px 26px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+  gap: 10px;
   box-sizing: border-box;
   max-height: 100%;
   overflow-y: auto;
@@ -631,16 +631,79 @@
 }
 .shotTitle {
   margin: 0;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 400;
   transform: rotate(-3deg);
 }
 .shotPanel p {
   margin: 0;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.5;
   max-width: 56ch;
 }
+/* ABOUT: skills as label + chips rows, then two buttons */
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 0;
+}
+.skillRow {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  gap: 12px;
+}
+.skillLabel {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+.skillTag {
+  padding: 4px 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+}
+.shotActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.shotButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.shotButtonRed {
+  background: var(--red);
+  border-color: var(--red);
+}
+.shotButton:hover,
+.shotButton:focus-visible {
+  background: var(--muted);
+  border-color: var(--muted);
+  outline: none;
+}
+
 .shotNote {
   color: var(--muted);
   font-size: 12px;
@@ -723,7 +786,7 @@
   opacity: 0.35;
 }
 .cutin.isOn {
-  animation: cutinRun 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  animation: cutinRun 0.55s cubic-bezier(0.2, 0.9, 0.3, 1) both;
 }
 @keyframes cutinRun {
   0% {
@@ -768,7 +831,7 @@
   position: absolute;
   inset: 0;
   transform-origin: 49.88% 50%;
-  transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.35);
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.35);
 }
 .cylImg {
   display: block;
@@ -829,7 +892,7 @@
   transform: scaleX(-1);
 }
 .cutin.isOn .flier {
-  animation: fly 0.4s cubic-bezier(0.5, 0, 0.75, 0) 0.15s both;
+  animation: fly 0.24s cubic-bezier(0.5, 0, 0.75, 0) 0.09s both;
 }
 @keyframes fly {
   0% {
@@ -857,7 +920,7 @@
   opacity: 0;
 }
 .cutin.isOn .flash {
-  animation: ring 0.3s ease-out 0.54s both;
+  animation: ring 0.2s ease-out 0.33s both;
 }
 @keyframes ring {
   from {
