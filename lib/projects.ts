@@ -185,18 +185,40 @@ export const PROJECTS: Project[] = [
 
   // ---------- ILLUSTRATIONS ----------
   {
-    slug: "illustration-1",
-    title: "[Illustration name]",
+    slug: "yellow-angel",
+    title: "Yellow Angel",
     category: "art",
-    summary: "[One or two sentences about the piece.]",
+    summary:
+      "A mix of graffiti and careful airbrushing: a glossy yellow figure with dripping, tag-style wings, set against a flat, loud red background for maximum contrast.",
     tools: ["Procreate"],
+    image: {
+      src: "/images/projects/yellow-angel.jpg",
+      alt: "A small glossy yellow figure with a star on its helmet and white graffiti-style wings, on a bright red background",
+    },
   },
   {
-    slug: "illustration-2",
-    title: "[Illustration name]",
+    slug: "cerberus-balloons",
+    title: "Cerberus Balloons",
     category: "art",
-    summary: "[One or two sentences about the piece.]",
+    summary:
+      "An abstract piece about emotions and the personas people wear. Three faces float like balloons over an erupting volcano, held by a sketched figure, and it carries my GodSaves trademark.",
     tools: ["Procreate"],
+    image: {
+      src: "/images/projects/cerberus-balloons.jpg",
+      alt: "Three faces with different expressions floating like balloons above an erupting volcano, held by a sketched figure, with the words God Saves",
+    },
+  },
+  {
+    slug: "not-icarus",
+    title: "Not Icarus",
+    category: "art",
+    summary:
+      "My own take on the Icarus myth, painted loosely and without care for the fall: soft, burning wings, a glowing head and the line \"Not Icarus, but he got too close.\"",
+    tools: ["Procreate"],
+    image: {
+      src: "/images/projects/not-icarus.jpg",
+      alt: "A pale winged figure with coral-red feathered wings and a glowing head against a dark background, with the words Not Icarus but he got too close",
+    },
   },
 ];
 
