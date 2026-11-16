@@ -261,6 +261,16 @@
   gap: 12px;
   padding: 18px 22px 24px;
 }
+/* the red "In progress" tag above a card's title */
+.status {
+  padding: 4px 9px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--red);
+  color: var(--paper);
+  transform: rotate(-2deg);
+}
 .cardTitle {
   margin: 0;
   font-size: 24px;
@@ -469,9 +479,9 @@
       0 / 9px 9px,
     var(--ground-deep);
 }
+/* show each screenshot whole, whatever its shape, on the halftone background */
 .shotFrame img {
-  object-fit: cover;
-  object-position: top;
+  object-fit: contain;
 }
 .shot figcaption {
   font-size: 12px;

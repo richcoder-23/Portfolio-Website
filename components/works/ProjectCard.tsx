@@ -5,7 +5,7 @@ import styles from "./works.module.css";
 
 // one project: picture, name, short description, tech stack and links
 export default function ProjectCard({ project }: { project: Project }) {
-  const { title, summary, tools, image, links, details, slug, category } =
+  const { title, summary, tools, image, links, details, slug, category, status } =
     project;
 
   return (
@@ -26,6 +26,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div className={styles.cardBody}>
+        {status && <span className={styles.status}>{status}</span>}
         <h3 className={styles.cardTitle}>
           <span className={styles.lblFirst}>{title[0]}</span>
           <span className={styles.lblRest}>{title.slice(1)}</span>

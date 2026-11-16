@@ -65,7 +65,8 @@ export default async function ProjectPage({ params }: Props) {
             </div>
           )}
 
-          {image && (
+          {/* the big image only shows when there are no screenshots below */}
+          {image && details.screenshots.length === 0 && (
             <div className={styles.heroImage}>
               <Image
                 src={image.src}

@@ -34,6 +34,7 @@ export type Project = {
   summary: string; // one or two sentences for the card
   tools: string[]; // tech stack, or the software you made it in
   image?: Picture;
+  status?: string; // optional red tag on the card, e.g. "In progress"
   links?: { href: string; label: string }[];
   // only the project with a details page needs this
   details?: {
@@ -54,7 +55,10 @@ export const PROJECTS: Project[] = [
     summary:
       "This website. A portfolio where the menu is a revolver: pick a bullet, watch it load and fire, and that section opens.",
     tools: ["Next.js", "React", "TypeScript", "CSS Modules", "Vercel"],
-    // image: { src: "/images/projects/portfolio-desktop.png", alt: "The revolver menu on a laptop screen" },
+    image: {
+      src: "/images/projects/portfolio-card.png",
+      alt: "The revolver menu: a halftone revolver with About, Works and Contact bullets beside it",
+    },
     links: [
       {
         href: "https://richard-o-portfolio-website.vercel.app/",
@@ -84,8 +88,26 @@ export const PROJECTS: Project[] = [
         "A Works page and a project details page driven from one data file, so adding a project is one edit.",
       ],
       screenshots: [
-        // add your screenshots here, e.g.
-        // { src: "/images/projects/portfolio-desktop.png", alt: "Revolver menu on desktop", caption: "Desktop" },
+        {
+          src: "/images/projects/portfolio-desktop.png",
+          alt: "The full revolver menu on a laptop: name tag, revolver, three bullets and the Pick your shot instruction",
+          caption: "Desktop",
+        },
+        {
+          src: "/images/projects/portfolio-loading.png",
+          alt: "The loading close-up: the cylinder turning as the Works bullet drops into a chamber",
+          caption: "Loading a bullet",
+        },
+        {
+          src: "/images/projects/portfolio-about.png",
+          alt: "The About panel open beside the revolver, with skills and two buttons",
+          caption: "The About panel",
+        },
+        {
+          src: "/images/projects/portfolio-category.png",
+          alt: "The Illustrations category page with its ransom-note title and category tabs",
+          caption: "A Works category page",
+        },
         // { src: "/images/projects/portfolio-phone.png", alt: "Revolver menu on a phone", caption: "Phone" },
       ],
       learned: [
@@ -95,6 +117,27 @@ export const PROJECTS: Project[] = [
         "Splitting one moving object into nested layers (position, tilt, recoil), so separate animations don't overwrite each other's transforms.",
       ],
     },
+  },
+
+  {
+    slug: "bptrnds",
+    title: "Bptrnds",
+    category: "coding",
+    status: "In progress",
+    summary:
+      "A blood pressure tracker in the making: log readings over time, see your trends at a glance, and get AI-powered guidance to stay under 120/80. The landing page, log-in and sign-up screens are live; the tracking features come next.",
+    tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"],
+    image: {
+      src: "/images/projects/bptrnds.png",
+      alt: "The Bptrnds landing page: the name in large black letters on a bright green background",
+    },
+    links: [
+      { href: "https://bptrnds.vercel.app/", label: "Live site" },
+      {
+        href: "https://github.com/richcoder-23/Bptrnds",
+        label: "Code on GitHub",
+      },
+    ],
   },
 
   // ---------- 3D & ANIMATION ----------
