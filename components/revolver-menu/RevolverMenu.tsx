@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RansomWord from "@/components/ransom/RansomWord";
+import { SITE } from "@/lib/site";
 import styles from "@/components/ransom/RansomWord.module.css";
 import {
   SECTIONS,
@@ -226,9 +227,9 @@ export default function RevolverMenu() {
 
           {section === "contact" && (
             <>
-              <span className={styles.shotEmail}>
-                [chinemelum.work@gmail.com]
-              </span>
+                            <a className={styles.shotEmail} href={`mailto:${SITE.email}`}>
+                {SITE.email}
+              </a>
               <p className={styles.shotNote}>
                 Open to commissions, freelance and collaborations
               </p>

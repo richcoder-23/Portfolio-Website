@@ -17,8 +17,9 @@ export const CHAMBERS: [number, number][] = [
 // rotating the cylinder by this much puts a chamber exactly at 9 o'clock
 export const BASE_ANGLE = 32.5;
 
+// the Works panel links. each one opens that category's page
 export const WORK_LINKS = [
-  { href: "#3d", label: "3d & animation" },
-  { href: "#coding", label: "Coding" },
-  { href: "#art", label: "Illustrations" },
+  { href: "/works/3d", label: "3d & animation" },
+  { href: "/works/coding", label: "Coding" },
+  { href: "/works/art", label: "Illustrations" },
 ];

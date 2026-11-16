@@ -1,0 +1,138 @@
+// ALL PROJECTS LIVE HERE.
+// add a project = add an object to PROJECTS. the /works page and the
+// project details page both read from this list, so nothing else needs editing.
+//
+// images go in public/images/projects/ and are written as "/images/projects/name.png".
+// leave `image` out and the card shows a halftone placeholder instead of a broken picture.
+
+export type Category = "coding" | "3d" | "art";
+
+export const CATEGORIES: { id: Category; label: string; blurb: string }[] = [
+  {
+    id: "coding",
+    label: "Coding",
+    blurb: "Websites and apps I've designed and built.",
+  },
+  {
+    id: "3d",
+    label: "3d & animation",
+    blurb: "Models, renders and short animations.",
+  },
+  {
+    id: "art",
+    label: "Illustrations",
+    blurb: "Drawings and digital paintings.",
+  },
+];
+
+export type Picture = { src: string; alt: string; caption?: string };
+
+export type Project = {
+  slug: string; // used in the URL: /works/<slug>
+  title: string;
+  category: Category;
+  summary: string; // one or two sentences for the card
+  tools: string[]; // tech stack, or the software you made it in
+  image?: Picture;
+  links?: { href: string; label: string }[];
+  // only the project with a details page needs this
+  details?: {
+    description: string[]; // paragraphs
+    problem: string[];
+    features: string[];
+    screenshots: Picture[];
+    learned: string[];
+  };
+};
+
+export const PROJECTS: Project[] = [
+  // ---------- CODING ----------
+  {
+    slug: "portfolio",
+    title: "Revolver portfolio",
+    category: "coding",
+    summary:
+      "This website. A portfolio where the menu is a revolver: pick a bullet, watch it load and fire, and that section opens.",
+    tools: ["Next.js", "React", "TypeScript", "CSS Modules", "Vercel"],
+    // image: { src: "/images/projects/portfolio-desktop.png", alt: "The revolver menu on a laptop screen" },
+    links: [
+      {
+        href: "https://richard-o-portfolio-website.vercel.app/",
+        label: "Live site",
+      },
+      {
+        href: "https://github.com/richcoder-23/Portfolio-Website",
+        label: "Code on GitHub",
+      },
+    ],
+    details: {
+      description: [
+        "My portfolio is built like a game menu. Instead of a navigation bar, a revolver sits on the screen with three bullets beside it: About, Works and Contact. Clicking a bullet plays a short sequence. A close-up of the cylinder slides in, the bullet drops into a chamber, the cylinder turns, the gun recoils and fires, and the chosen section slides in as if it were hit.",
+        "The look borrows from comics and ransom notes: halftone dots, hard black shadows, and lettering cut from different typefaces. I designed it first as a mockup, then rebuilt it in Next.js as real, responsive components.",
+      ],
+      problem: [
+        "Most student portfolios look the same: a hero, a grid of cards, a contact form. I wanted mine to show what I make before anyone reads a word, while still being quick to use and easy to read.",
+        "The harder problem was turning a fixed-size design mockup into a site that works on every screen. The mockup was drawn for one desktop size, so on phones, tablets and short laptop screens the gun, bullets and text overlapped or drifted apart. Each screen shape needed its own layout without losing the feel of the design.",
+      ],
+      features: [
+        "Revolver menu with a 1.5-second fire sequence: cylinder close-up, bullet loading, recoil, muzzle flash, tracer and screen shake.",
+        "A small state machine (idle, loading, firing, open, closing) so the animation can't be interrupted or double-fired.",
+        "A reusable ransom-note lettering component that styles every letter differently but still reads as one word to screen readers.",
+        "Separate layouts for phones, tablets held upright, and laptops, so nothing overlaps or scrolls on any screen.",
+        "Keyboard support: bullets can be tabbed to, and focus moves to the back button when a section opens.",
+        "Respects the 'reduce motion' setting: shake and recoil are turned off and panels fade instead.",
+        "A Works page and a project details page driven from one data file, so adding a project is one edit.",
+      ],
+      screenshots: [
+        // add your screenshots here, e.g.
+        // { src: "/images/projects/portfolio-desktop.png", alt: "Revolver menu on desktop", caption: "Desktop" },
+        // { src: "/images/projects/portfolio-phone.png", alt: "Revolver menu on a phone", caption: "Phone" },
+      ],
+      learned: [
+        "[Rewrite these in your own words.] Animations in CSS and timers in JavaScript have to agree. The fire sequence only works because each step in code waits exactly as long as the matching CSS animation lasts.",
+        "Laying things out by percentage of screen height breaks on tall screens. On an upright iPad the gun drifted far from my name, so I switched to fixed distances from the top and gave tablets their own layout.",
+        "The difference between 100vh and 100dvh: on phones and iPads, 100vh includes space hidden behind the browser toolbar, which made the page scroll.",
+        "Splitting one moving object into nested layers (position, tilt, recoil), so separate animations don't overwrite each other's transforms.",
+      ],
+    },
+  },
+
+  // ---------- 3D & ANIMATION ----------
+  {
+    slug: "3d-model-1",
+    title: "[3D model name]",
+    category: "3d",
+    summary: "[One or two sentences: what it is and what you were going for.]",
+    tools: ["Blender"],
+  },
+  {
+    slug: "animation-1",
+    title: "[Animation name]",
+    category: "3d",
+    summary: "[One or two sentences about the animation.]",
+    tools: ["Blender"],
+    // links: [{ href: "https://youtube.com/...", label: "Watch it" }],
+  },
+
+  // ---------- ILLUSTRATIONS ----------
+  {
+    slug: "illustration-1",
+    title: "[Illustration name]",
+    category: "art",
+    summary: "[One or two sentences about the piece.]",
+    tools: ["Procreate"],
+  },
+  {
+    slug: "illustration-2",
+    title: "[Illustration name]",
+    category: "art",
+    summary: "[One or two sentences about the piece.]",
+    tools: ["Procreate"],
+  },
+];
+
+export const projectsIn = (category: Category) =>
+  PROJECTS.filter((p) => p.category === category);
+
+export const projectBySlug = (slug: string) =>
+  PROJECTS.find((p) => p.slug === slug);

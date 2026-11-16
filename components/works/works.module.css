@@ -1,0 +1,503 @@
+/* styles for the /works pages. they reuse the palette from globals.css
+   and the fonts loaded in layout.tsx, so they match the revolver menu */
+
+/* ---------- PAGE FRAME ---------- */
+.page {
+  position: relative;
+  min-height: 100dvh;
+  color: var(--paper);
+  font-size: 14px;
+  overflow-x: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      transparent 35%,
+      rgba(20, 16, 16, 0.5) 100%
+    ),
+    var(--ground);
+}
+/* the same halftone dots as the home page, fixed so they don't scroll */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--ink) 2px, transparent 2.5px) 0 0 /
+    12px 12px;
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 40%,
+    transparent 40%,
+    #000 90%
+  );
+  mask-image: radial-gradient(circle at 50% 40%, transparent 40%, #000 90%);
+  opacity: 0.55;
+}
+.inner {
+  position: relative;
+  width: min(1120px, 100% - 2 * max(16px, 5vw));
+  margin: 0 auto;
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding: 40px 0 0;
+}
+.nameTag {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 14px 20px;
+  text-decoration: none;
+  filter: drop-shadow(8px 10px 0 var(--ink));
+  transform: rotate(-2deg);
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+.nameTag:hover,
+.nameTag:focus-visible {
+  transform: rotate(0deg) translateY(-2px);
+  outline: none;
+}
+.name {
+  font-size: 20px;
+}
+.place {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* black buttons with white text, like the back button in the panels */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.button:hover,
+.button:focus-visible {
+  background: var(--muted);
+  border-color: var(--muted);
+  outline: none;
+}
+/* the red one, for the main call to action */
+.buttonRed {
+  background: var(--red);
+  border-color: var(--red);
+  font-size: 14px;
+  min-height: 52px;
+  padding: 0 22px;
+}
+
+/* ---------- PAGE TITLE ---------- */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 56px 0 8px;
+}
+.titleTag {
+  display: inline-block;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 14px 24px 16px;
+  font-size: clamp(34px, 6vw, 56px);
+  font-weight: 400;
+  filter: drop-shadow(10px 12px 0 var(--ink));
+  transform: rotate(-2deg);
+}
+.lead {
+  margin: 8px 0 0;
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* jump links to each category */
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jumpLink {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 6px 12px;
+  color: var(--paper);
+  text-decoration: none;
+  border: 1.5px solid var(--paper);
+}
+/* the category you're on is filled in */
+.jumpLink[aria-current="page"],
+.jumpLink:hover,
+.jumpLink:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+}
+
+/* the bullet-label lettering: one Bungee capital, the rest in Kaushan Script */
+.lblFirst {
+  font-family: var(--font-bungee), "Arial Black", sans-serif;
+  font-size: 1.1em;
+  line-height: 1;
+}
+.lblRest {
+  font-family: var(--font-kaushan), "Brush Script MT", cursive;
+  line-height: 1;
+  margin-left: 1px;
+}
+
+/* ---------- CATEGORY SECTIONS ---------- */
+.category {
+  padding: 64px 0 8px;
+  /* leave room above when the page jumps here from the Works panel */
+  scroll-margin-top: 24px;
+}
+.categoryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 20px;
+  margin-bottom: 32px;
+  padding-bottom: 14px;
+  border-bottom: 2px dashed rgba(242, 238, 232, 0.35);
+}
+.categoryTitle {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 400;
+}
+.categoryBlurb {
+  margin: 0;
+  color: rgba(242, 238, 232, 0.75);
+}
+
+/* cards flow into as many columns as fit, at least ~300px wide each */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 44px 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- PROJECT CARD ---------- */
+.card {
+  --tilt: -1.2deg;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  filter: drop-shadow(10px 12px 0 var(--ink));
+  transform: rotate(var(--tilt));
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+/* every other card leans the other way, like pinned photos */
+.grid > li:nth-child(even) .card {
+  --tilt: 1deg;
+}
+.card:hover,
+.card:focus-within {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+/* the picture area. without an image it shows a halftone placeholder */
+.cardImage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 12px 12px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(242, 238, 232, 0.25) 1.6px, transparent 2px) 0
+      0 / 9px 9px,
+    var(--ground-deep);
+}
+.cardImage img {
+  object-fit: cover;
+}
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  text-align: center;
+  color: rgba(242, 238, 232, 0.7);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cardBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 22px 24px;
+}
+.cardTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+.cardSummary {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* tech-stack chips */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  padding: 4px 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+}
+.tagsLabel {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cardLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+/* outlined button for secondary links on the paper cards */
+.buttonGhost {
+  background: transparent;
+  color: var(--ink);
+}
+.buttonGhost:hover,
+.buttonGhost:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.empty {
+  margin: 0;
+  color: rgba(242, 238, 232, 0.7);
+}
+
+/* ---------- FOOTER / CALL TO ACTION ---------- */
+.footer {
+  margin-top: 96px;
+  padding: 48px 0 56px;
+  border-top: 2px dashed rgba(242, 238, 232, 0.35);
+}
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+}
+.ctaText {
+  margin: 0;
+  font-family: var(--font-bungee), "Arial Black", sans-serif;
+  font-size: clamp(22px, 3.4vw, 32px);
+  line-height: 1.1;
+}
+.ctaText em {
+  font-family: var(--font-kaushan), "Brush Script MT", cursive;
+  font-style: normal;
+}
+.small {
+  margin: 32px 0 0;
+  font-size: 12px;
+  color: rgba(242, 238, 232, 0.6);
+}
+
+/* ---------- PROJECT DETAILS PAGE ---------- */
+.article {
+  margin-top: 48px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: clamp(24px, 5vw, 56px);
+  filter: drop-shadow(14px 16px 0 var(--ink));
+}
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.articleTitle {
+  margin: 12px 0 18px;
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 400;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+.articleLead {
+  margin: 0 0 20px;
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.heroImage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 28px 0 8px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(242, 238, 232, 0.25) 1.6px, transparent 2px) 0
+      0 / 9px 9px,
+    var(--ground-deep);
+}
+.heroImage img {
+  object-fit: cover;
+}
+
+/* each block of the case study: heading on the left, text on the right on wide screens */
+.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 32px 0;
+  border-top: 2px solid var(--ink);
+}
+@media (min-width: 860px) {
+  .block {
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+  }
+}
+.blockTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.blockBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.blockBody p {
+  margin: 0;
+  max-width: 64ch;
+  line-height: 1.7;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  position: relative;
+  padding-left: 26px;
+  line-height: 1.6;
+  max-width: 64ch;
+}
+/* a small red square as the bullet point */
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  background: var(--red);
+  transform: rotate(8deg);
+}
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  margin: 0;
+}
+.shot {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.shotFrame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background:
+    radial-gradient(circle, rgba(242, 238, 232, 0.25) 1.6px, transparent 2px) 0
+      0 / 9px 9px,
+    var(--ground-deep);
+}
+.shotFrame img {
+  object-fit: cover;
+  object-position: top;
+}
+.shot figcaption {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---------- SMALL SCREENS ---------- */
+@media (max-width: 760px) {
+  .header {
+    padding-top: 16px;
+  }
+  .intro {
+    padding-top: 36px;
+  }
+  .category {
+    padding-top: 48px;
+  }
+  .card,
+  .grid > li:nth-child(even) .card {
+    --tilt: 0deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .nameTag {
+    transition: none;
+  }
+}

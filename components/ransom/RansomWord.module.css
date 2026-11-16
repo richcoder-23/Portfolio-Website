@@ -676,10 +676,17 @@
 .shotEmail {
   font-size: 18px;
   font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
   border-bottom: 2px solid var(--ink);
-  padding-bottom: 4px;
+  padding: 4px 2px;
 }
-
+.shotEmail:hover,
+.shotEmail:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+}
 /* ---------- THE CUT-IN ---------- */
 .cutin {
   position: absolute;
