@@ -34,6 +34,9 @@ export type Project = {
   summary: string; // one or two sentences for the card
   tools: string[]; // tech stack, or the software you made it in
   image?: Picture;
+  // optional short silent loop that plays on the card (the image shows while it loads,
+  // and instead of it for visitors who turned on "reduce motion")
+  video?: string;
   status?: string; // optional red tag on the card, e.g. "In progress"
   links?: { href: string; label: string }[];
   // only the project with a details page needs this
@@ -72,7 +75,8 @@ export const PROJECTS: Project[] = [
     details: {
       description: [
         "My portfolio is built like a game menu. Instead of a navigation bar, a revolver sits on the screen with three bullets beside it: About, Works and Contact. Clicking a bullet plays a short sequence. A close-up of the cylinder slides in, the bullet drops into a chamber, the cylinder turns, the gun recoils and fires, and the chosen section slides in as if it were hit.",
-        "The look borrows from comics and ransom notes: halftone dots, hard black shadows, and lettering cut from different typefaces. I designed it first as a mockup, then rebuilt it in Next.js as real, responsive components.",
+        "The main inspiration is the Persona games, most of all the menus in Persona 5 Royal, where picking an option feels like an event: ransom-note lettering, angled panels and sharp, snappy transitions. I wanted my navigation to feel like that game menu rather than a website header, so I built my own version around a revolver and added comic-style halftone dots and hard black shadows.",
+        "I designed it first as a mockup, then rebuilt it in Next.js as real, responsive components.",
       ],
       problem: [
         "Most student portfolios look the same: a hero, a grid of cards, a contact form. I wanted mine to show what I make before anyone reads a word, while still being quick to use and easy to read.",
@@ -142,19 +146,41 @@ export const PROJECTS: Project[] = [
 
   // ---------- 3D & ANIMATION ----------
   {
-    slug: "3d-model-1",
-    title: "[3D model name]",
+    slug: "mushroom-in-a-bottle",
+    title: "Mushroom in a Bottle",
     category: "3d",
-    summary: "[One or two sentences: what it is and what you were going for.]",
+    summary:
+      "A tiny mushroom ecosystem sealed inside a glass bottle. I was going for a semi-realistic render: believable glass with reflections and refraction, soft moss and grass, and warm, glowing light.",
     tools: ["Blender"],
+    image: {
+      src: "/images/projects/mushroom-bottle.jpg",
+      alt: "Two red spotted mushrooms on a patch of moss inside a corked glass bottle, on a warm orange background",
+    },
   },
   {
-    slug: "animation-1",
-    title: "[Animation name]",
+    slug: "phone-keychain",
+    title: "Phone Keychain",
     category: "3d",
-    summary: "[One or two sentences about the animation.]",
+    summary:
+      "A playful take on old-school phones, reimagined as a keychain charm. Glossy candy-pink casing, chunky lettered keys, a holographic \"Directed By\" screen and a chain looping around it, rendered like a nostalgic product shot.",
     tools: ["Blender"],
-    // links: [{ href: "https://youtube.com/...", label: "Watch it" }],
+    image: {
+      src: "/images/projects/phone-keychain.jpg",
+      alt: "A glossy pink retro phone with a holographic Directed By screen and a silver chain looping around it",
+    },
+  },
+  {
+    slug: "vaso",
+    title: "Vaso",
+    category: "3d",
+    summary:
+      "Vaso is an original character of mine. This short teaser introduces them: the camera finds Vaso standing by a glowing platform, pushes in for a close-up, then pulls back. I modelled, rigged and animated the character, with outlined, comic-style shading.",
+    tools: ["Blender"],
+    image: {
+      src: "/images/projects/vaso.jpg",
+      alt: "Close-up of Vaso, a red block-headed character with spiky hair, a bandage over one eye and a dark jacket",
+    },
+    video: "/images/projects/vaso-loop.mp4",
   },
 
   // ---------- ILLUSTRATIONS ----------

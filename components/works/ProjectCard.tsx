@@ -1,12 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
+import CardVideo from "./CardVideo";
 import styles from "./works.module.css";
 
 // one project: picture, name, short description, tech stack and links
 export default function ProjectCard({ project }: { project: Project }) {
-  const { title, summary, tools, image, links, details, slug, category, status } =
-    project;
+  const {
+    title,
+    summary,
+    tools,
+    image,
+    video,
+    links,
+    details,
+    slug,
+    category,
+    status,
+  } = project;
 
   return (
     <article className={styles.card}>
@@ -22,6 +33,14 @@ export default function ProjectCard({ project }: { project: Project }) {
           <span className={styles.placeholder} aria-hidden="true">
             image coming soon
           </span>
+        )}
+        {/* a short silent loop over the image, with a play / pause button */}
+        {video && (
+          <CardVideo
+            src={video}
+            poster={image?.src}
+            label={`${title} clip`}
+          />
         )}
       </div>
 

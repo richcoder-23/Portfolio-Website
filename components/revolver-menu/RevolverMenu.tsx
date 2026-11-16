@@ -181,7 +181,11 @@ export default function RevolverMenu() {
         )}
       >
         <section
-          className={cx(styles.shotPanel, styles.boil)}
+          className={cx(
+            styles.shotPanel,
+            styles.boil,
+            section === "about" && styles.aboutPanel,
+          )}
           aria-label={section ? labelOf(section) : "Section"}
         >
           <button
