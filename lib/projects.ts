@@ -37,6 +37,10 @@ export type Project = {
   // optional short silent loop that plays on the card (the image shows while it loads,
   // and instead of it for visitors who turned on "reduce motion")
   video?: string;
+  // the uncropped original for "View in full" (defaults to the card image)
+  full?: string;
+  // a full-length video (with sound) for "View in full" instead of a picture
+  fullVideo?: string;
   status?: string; // optional red tag on the card, e.g. "In progress"
   links?: { href: string; label: string }[];
   // only the project with a details page needs this
@@ -62,6 +66,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/portfolio-card.png",
       alt: "The revolver menu: a halftone revolver with About, Works and Contact bullets beside it",
     },
+    full: "/images/projects/portfolio-desktop.png",
     links: [
       {
         href: "https://richard-o-portfolio-website.vercel.app/",
@@ -135,6 +140,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/bptrnds.png",
       alt: "The Bptrnds landing page: the name in large black letters on a bright green background",
     },
+    full: "/images/projects/full/bptrnds-full.jpg",
     links: [
       { href: "https://bptrnds.vercel.app/", label: "Live site" },
       {
@@ -156,6 +162,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/mushroom-bottle.jpg",
       alt: "Two red spotted mushrooms on a patch of moss inside a corked glass bottle, on a warm orange background",
     },
+    full: "/images/projects/full/mushroom-bottle-full.jpg",
   },
   {
     slug: "phone-keychain",
@@ -168,6 +175,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/phone-keychain.jpg",
       alt: "A glossy pink retro phone with a holographic Directed By screen and a silver chain looping around it",
     },
+    full: "/images/projects/full/phone-keychain-full.jpg",
   },
   {
     slug: "vaso",
@@ -181,6 +189,7 @@ export const PROJECTS: Project[] = [
       alt: "Close-up of Vaso, a red block-headed character with spiky hair, a bandage over one eye and a dark jacket",
     },
     video: "/images/projects/vaso-loop.mp4",
+    fullVideo: "/images/projects/full/vaso-full.mp4",
   },
 
   // ---------- ILLUSTRATIONS ----------
@@ -195,6 +204,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/yellow-angel.jpg",
       alt: "A small glossy yellow figure with a star on its helmet and white graffiti-style wings, on a bright red background",
     },
+    full: "/images/projects/full/yellow-angel-full.jpg",
   },
   {
     slug: "cerberus-balloons",
@@ -207,6 +217,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/cerberus-balloons.jpg",
       alt: "Three faces with different expressions floating like balloons above an erupting volcano, held by a sketched figure, with the words God Saves",
     },
+    full: "/images/projects/full/cerberus-balloons-full.jpg",
   },
   {
     slug: "not-icarus",
@@ -219,6 +230,7 @@ export const PROJECTS: Project[] = [
       src: "/images/projects/not-icarus.jpg",
       alt: "A pale winged figure with coral-red feathered wings and a glowing head against a dark background, with the words Not Icarus but he got too close",
     },
+    full: "/images/projects/full/not-icarus-full.jpg",
   },
 ];
 

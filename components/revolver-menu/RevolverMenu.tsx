@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import RansomWord from "@/components/ransom/RansomWord";
-import { SITE } from "@/lib/site";
+import EmailActions, { CopyEmailButton } from "@/components/contact/EmailActions";
 import styles from "@/components/ransom/RansomWord.module.css";
 import {
   ABOUT_SKILLS,
@@ -240,12 +240,10 @@ export default function RevolverMenu() {
                 <Link href="/works/coding" className={styles.shotButton}>
                   See my works ›
                 </Link>
-                <a
-                  href={`mailto:${SITE.email}`}
+                <CopyEmailButton
                   className={`${styles.shotButton} ${styles.shotButtonRed}`}
-                >
-                  Get in touch ›
-                </a>
+                  label="Get in touch ›"
+                />
               </div>
             </>
           )}
@@ -267,9 +265,15 @@ export default function RevolverMenu() {
 
           {section === "contact" && (
             <>
-                            <a className={styles.shotEmail} href={`mailto:${SITE.email}`}>
-                {SITE.email}
-              </a>
+              <EmailActions
+                classes={{
+                  wrap: styles.contactWrap,
+                  email: styles.shotEmail,
+                  actions: styles.shotActions,
+                  copy: `${styles.shotButton} ${styles.shotButtonRed}`,
+                  link: styles.shotTextLink,
+                }}
+              />
               <p className={styles.shotNote}>
                 Open to commissions, freelance and collaborations
               </p>

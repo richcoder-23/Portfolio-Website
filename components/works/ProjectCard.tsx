@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import CardVideo from "./CardVideo";
+import FullView from "./FullView";
 import styles from "./works.module.css";
 
 // one project: picture, name, short description, tech stack and links
@@ -12,6 +13,8 @@ export default function ProjectCard({ project }: { project: Project }) {
     tools,
     image,
     video,
+    full,
+    fullVideo,
     links,
     details,
     slug,
@@ -40,6 +43,15 @@ export default function ProjectCard({ project }: { project: Project }) {
             src={video}
             poster={image?.src}
             label={`${title} clip`}
+          />
+        )}
+        {/* opens the uncropped picture, or the full video, in an overlay */}
+        {image && (
+          <FullView
+            src={fullVideo ?? full ?? image.src}
+            alt={image.alt}
+            label={title}
+            kind={fullVideo ? "video" : "image"}
           />
         )}
       </div>

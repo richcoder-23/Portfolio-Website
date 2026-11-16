@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./works.module.css";
 
 type Props = {
@@ -16,8 +16,13 @@ type Props = {
 export default function FullView({ src, alt, label, kind = "image" }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  // the big file is only fetched once someone asks to see it
+  const [requested, setRequested] = useState(false);
 
-  const open = () => dialogRef.current?.showModal();
+  const open = () => {
+    setRequested(true);
+    dialogRef.current?.showModal();
+  };
   const close = () => dialogRef.current?.close();
 
   let media: React.ReactNode;
@@ -29,14 +34,14 @@ export default function FullView({ src, alt, label, kind = "image" }: Props) {
         src={src}
         controls
         playsInline
-        preload="none"
+        preload="metadata"
         aria-label={alt}
       />
     );
   } else {
     // a plain <img> here on purpose: the overlay shows the file at its own size
     // eslint-disable-next-line @next/next/no-img-element
-    media = <img className={styles.lightboxMedia} src={src} alt={alt} loading="lazy" />;
+    media = <img className={styles.lightboxMedia} src={src} alt={alt} />;
   }
 
   return (
@@ -70,7 +75,7 @@ export default function FullView({ src, alt, label, kind = "image" }: Props) {
         >
           ✕
         </button>
-        {media}
+        {requested && media}
       </dialog>
     </>
   );

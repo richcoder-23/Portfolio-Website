@@ -26,7 +26,7 @@ export const ABOUT_SKILLS = [
 
 // the Works panel links. each one opens that category's page
 export const WORK_LINKS = [
-  { href: "/works/3d", label: "3d & animation" },
   { href: "/works/coding", label: "Coding" },
+  { href: "/works/3d", label: "3d & animation" },
   { href: "/works/art", label: "Illustrations" },
 ];

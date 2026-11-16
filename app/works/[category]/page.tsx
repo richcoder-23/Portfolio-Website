@@ -31,31 +31,18 @@ export default async function CategoryPage({ params }: Props) {
 
   const projects = projectsIn(current.id);
 
+  // the other two categories, in order, starting with the one after this
+  const i = CATEGORIES.indexOf(current);
+  const next = CATEGORIES[(i + 1) % CATEGORIES.length];
+  const after = CATEGORIES[(i + 2) % CATEGORIES.length];
+
   return (
-    <PageFrame>
+    <PageFrame current={current.id}>
       <section className={styles.intro} aria-labelledby="category-title">
         <h1 id="category-title" className={styles.titleTag}>
           <RansomWord text={current.label} />
         </h1>
         <p className={styles.lead}>{current.blurb}</p>
-
-        {/* switch between the three categories */}
-        <nav aria-label="Works categories">
-          <ul className={styles.jump}>
-            {CATEGORIES.map((c) => (
-              <li key={c.id}>
-                <Link
-                  href={`/works/${c.id}`}
-                  className={styles.jumpLink}
-                  aria-current={c.id === current.id ? "page" : undefined}
-                >
-                  <span className={styles.lblFirst}>{c.label[0]}</span>
-                  <span className={styles.lblRest}>{c.label.slice(1)}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </section>
 
       <section
@@ -74,6 +61,22 @@ export default async function CategoryPage({ params }: Props) {
           <p className={styles.empty}>More on the way.</p>
         )}
       </section>
+
+      {/* when you reach the end, offer the next section like turning a page */}
+      <nav className={styles.keepLooking} aria-label="More works">
+        <span className={styles.keepLabel}>Keep looking</span>
+        <Link href={`/works/${next.id}`} className={styles.nextLink}>
+          <span className={styles.nextTag}>Next</span>
+          <span>
+            <span className={styles.lblFirst}>{next.label[0]}</span>
+            <span className={styles.lblRest}>{next.label.slice(1)}</span>
+          </span>
+          <span aria-hidden="true">›</span>
+        </Link>
+        <Link href={`/works/${after.id}`} className={styles.otherLink}>
+          or {after.label} ›
+        </Link>
+      </nav>
     </PageFrame>
   );
 }

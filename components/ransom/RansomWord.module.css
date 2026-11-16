@@ -759,10 +759,24 @@
   border-bottom: 2px solid var(--ink);
   padding: 4px 2px;
 }
-.shotEmail:hover,
-.shotEmail:focus-visible {
-  background: var(--ink);
-  color: var(--paper);
+/* contact panel: email, then copy button and two text links */
+.contactWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.shotTextLink {
+  align-self: center;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+.shotTextLink:hover,
+.shotTextLink:focus-visible {
+  color: var(--red);
   outline: none;
 }
 /* ---------- THE CUT-IN ---------- */

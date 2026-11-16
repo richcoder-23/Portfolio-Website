@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SITE } from "@/lib/site";
 
 // mailto: links only work when the computer has an email app set up, which most
@@ -28,15 +28,18 @@ async function copyText(text: string) {
   }
 }
 
-function useCopyEmail() {
-  const [copied, setCopied] = useState(false);
+// "copied" = it worked; "blocked" = the browser refused, so we fall back
+type CopyState = "idle" | "copied" | "blocked";
+
+function useCopyEmail(onBlocked?: () => void) {
+  const [state, setState] = useState<CopyState>("idle");
   async function copy() {
-    if (await copyText(SITE.email)) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    }
+    const ok = await copyText(SITE.email);
+    setState(ok ? "copied" : "blocked");
+    if (!ok) onBlocked?.();
+    setTimeout(() => setState("idle"), ok ? 2500 : 6000);
   }
-  return { copied, copy };
+  return { state, copy };
 }
 
 // one button that copies the email, e.g. "Get in touch ›" in the About panel
@@ -47,7 +50,10 @@ export function CopyEmailButton({
   className?: string;
   label?: string;
 }) {
-  const { copied, copy } = useCopyEmail();
+  const { state, copy } = useCopyEmail();
+  // if copying is blocked, the button shows the address so it can be typed or copied
+  const text =
+    state === "copied" ? "Email copied ✓" : state === "blocked" ? SITE.email : label;
   return (
     <button
       type="button"
@@ -55,8 +61,9 @@ export function CopyEmailButton({
       onClick={copy}
       title={`Copy ${SITE.email}`}
       aria-live="polite"
+      style={state === "blocked" ? { textTransform: "none" } : undefined}
     >
-      {copied ? "Email copied ✓" : label}
+      {text}
     </button>
   );
 }
@@ -71,10 +78,23 @@ type Classes = {
 
 // the email written out, a copy button, and two other ways to send a message
 export default function EmailActions({ classes = {} }: { classes?: Classes }) {
-  const { copied, copy } = useCopyEmail();
+  const emailRef = useRef<HTMLSpanElement>(null);
+  // if copying is blocked, select the address on the page instead
+  const selectEmail = () => {
+    const el = emailRef.current;
+    const selection = window.getSelection();
+    if (!el || !selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+  const { state, copy } = useCopyEmail(selectEmail);
   return (
     <div className={classes.wrap}>
-      <span className={classes.email}>{SITE.email}</span>
+      <span ref={emailRef} className={classes.email}>
+        {SITE.email}
+      </span>
       <div className={classes.actions}>
         <button
           type="button"
@@ -82,7 +102,11 @@ export default function EmailActions({ classes = {} }: { classes?: Classes }) {
           onClick={copy}
           aria-live="polite"
         >
-          {copied ? "Copied ✓" : "Copy email"}
+          {state === "copied"
+            ? "Copied ✓"
+            : state === "blocked"
+              ? "Selected, press Ctrl+C"
+              : "Copy email"}
         </button>
         <a
           className={classes.link}

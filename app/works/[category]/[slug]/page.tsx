@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import RansomWord from "@/components/ransom/RansomWord";
+import FullView from "@/components/works/FullView";
 import PageFrame from "@/components/works/PageFrame";
 import styles from "@/components/works/works.module.css";
 import { CATEGORIES, PROJECTS, projectBySlug } from "@/lib/projects";
@@ -40,6 +41,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <PageFrame
       back={{ href: `/works/${category}`, label: `all ${categoryLabel}` }}
+      current={category}
     >
       <article className={styles.article} aria-labelledby="project-title">
         <header>
@@ -129,6 +131,11 @@ export default async function ProjectPage({ params }: Props) {
                         alt={shot.alt}
                         fill
                         sizes="(max-width: 760px) 100vw, 400px"
+                      />
+                      <FullView
+                        src={shot.src}
+                        alt={shot.alt}
+                        label={shot.caption ?? "screenshot"}
                       />
                     </div>
                     {shot.caption && <figcaption>{shot.caption}</figcaption>}
